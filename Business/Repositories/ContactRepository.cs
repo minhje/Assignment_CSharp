@@ -47,7 +47,7 @@ public class ContactRepository(IFileService fileService) : IContactRepository
 
     public List<Contact> GetAllContacts()
     {
-        var list = GetContactsFromFile();
-        return list;
+        return GetContactsFromFile();
+       
     }
 }

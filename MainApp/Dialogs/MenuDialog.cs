@@ -1,4 +1,7 @@
-﻿using Business.Interfaces;
+﻿using Business.Factories;
+using Business.Interfaces;
+using Business.Repositories;
+using Business.Services;
 
 namespace MainApp.Dialogs;
 
@@ -6,9 +9,10 @@ public class MenuDialog(IContactService contactService)
 {
     private readonly IContactService _contactService = contactService;
 
+
     public void MainMenu()
     {
-        while (true) 
+        while (true)
         {
             Console.Clear();
             Console.WriteLine("-------- MAIN MENU --------");
@@ -27,7 +31,7 @@ public class MenuDialog(IContactService contactService)
                     ViewContacts();
                     break;
                 case "3":
-                    Environment.Exit(0);
+                    ExitApplication();
                     break;
                 default:
                     Console.WriteLine("Invalid option. Press any key to continue...");
@@ -37,5 +41,83 @@ public class MenuDialog(IContactService contactService)
         }
     }
 
+    public void AddContact()
+    {
+        var contact = ContactFactory.Create();
 
+        Console.Clear();
+        Console.WriteLine("-------- ADD CONTACT --------");
+        Console.Write("First Name: ");
+        contact.FirstName = Console.ReadLine();
+
+        Console.Write("Last Name: ");
+        contact.LastName = Console.ReadLine();
+
+        Console.Write("Email: ");
+        contact.Email = Console.ReadLine();
+
+        Console.Write("Phone number: ");
+        contact.PhoneNumber = Console.ReadLine();
+
+        Console.Write("Address: ");
+        contact.Address = Console.ReadLine();
+
+        Console.Write("Postal Code: ");
+        contact.PostalCode = Console.ReadLine();
+
+        Console.Write("City: ");
+        contact.City = Console.ReadLine();
+
+        var result = _contactService.CreateContact(contact);
+
+        if (result)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Contact added successfully. Press any key to continue...");
+            Console.ReadKey();
+        }
+        else
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Failed to add contact. Press any key to continue...");
+            Console.ReadKey();
+        }
+    }
+
+    public void ViewContacts()
+    {
+        Console.Clear();
+        Console.WriteLine("-------- VIEW CONTACTS --------");
+        var contacts = _contactService.GetAllContacts();
+
+        foreach (var contact in contacts)
+        {
+            Console.WriteLine("-------------------------------------------");
+            Console.WriteLine($" Id: {contact.Id}");
+            Console.WriteLine($" Name: {contact.FirstName} {contact.LastName}");
+            Console.WriteLine($" Email: {contact.Email}");
+            Console.WriteLine($" Phone number: {contact.PhoneNumber}");
+            Console.WriteLine($" Address: {contact.Address} - {contact.PostalCode} - {contact.City}");
+            Console.WriteLine("-------------------------------------------");
+            Console.ReadKey();
+        }
+    }
+
+    public void ExitApplication()
+    {
+        Console.Clear();
+        Console.WriteLine("Are you sure you want to exit the application (y/n)? ");
+        var response = Console.ReadLine();
+
+        if (response.ToLower() == "y")
+        {
+            Console.WriteLine("Exiting application...");
+            Environment.Exit(0);
+        }
+        else
+        {
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
+    }
 }

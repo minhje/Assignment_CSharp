@@ -2,21 +2,20 @@
 using Business.Interfaces;
 using Business.Models;
 using System.Diagnostics;
-using System.Reflection.Emit;
 
 namespace Business.Services;
 
 public class ContactService(IContactRepository contactRepository) : IContactService
 {
     private readonly IContactRepository _contactRepository = contactRepository;
-    private List<Contact> _contacts = [];
+    private readonly List<Contact> _contacts = [];
+    private readonly FileService _fileService = new(@"c:\projects", "contacts.json");
 
     public bool CreateContact(Contact contact)
     {
         try
         {
             contact.Id = IdGenerator.GenerateUniqueId();
-
             _contacts.Add(contact);
 
             var result = _contactRepository.SaveContactListToFile(_contacts);
@@ -31,7 +30,8 @@ public class ContactService(IContactRepository contactRepository) : IContactServ
 
     public IEnumerable<Contact> GetAllContacts()
     {
-        _contacts = _contactRepository.GetAllContacts();
         return _contacts;
     }
+
+
 }

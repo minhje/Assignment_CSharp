@@ -10,3 +10,6 @@ var serviceProvider = new ServiceCollection()
     .AddSingleton<IContactService, ContactService>()
     .AddTransient<MenuDialog>()
     .BuildServiceProvider();
+
+var menuDialog = serviceProvider.GetRequiredService<MenuDialog>();
+menuDialog.MainMenu();
