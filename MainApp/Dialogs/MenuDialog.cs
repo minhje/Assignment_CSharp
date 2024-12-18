@@ -99,8 +99,14 @@ public class MenuDialog(IContactService contactService)
             Console.WriteLine($" Phone number: {contact.PhoneNumber}");
             Console.WriteLine($" Address: {contact.Address} - {contact.PostalCode} - {contact.City}");
             Console.WriteLine("-------------------------------------------");
-            Console.ReadKey();
         }
+
+        if (contacts.Count() == 0)
+        {
+            Console.WriteLine("No contacts found. Press any key to continue...");
+        }
+
+        Console.ReadKey();
     }
 
     public void ExitApplication()

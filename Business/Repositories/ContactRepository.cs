@@ -31,10 +31,9 @@ public class ContactRepository(IFileService fileService) : IContactRepository
         try
         {
             var json = _fileService.GetContentFromFile();
-            if (!string.IsNullOrEmpty(json))
-            {
+
+            if (!string.IsNullOrEmpty(json))       
                 list = JsonSerializer.Deserialize<List<Contact>>(json);
-            }
         }
         catch (Exception ex)
         {
@@ -42,6 +41,10 @@ public class ContactRepository(IFileService fileService) : IContactRepository
             return [];
         }
 
+        if (list == null)
+            return [];
+
+        else
         return list;
     }
 
