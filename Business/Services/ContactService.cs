@@ -15,7 +15,7 @@ public class ContactService : IContactService
     public ContactService(IContactRepository contactRepository)
     {
         _contactRepository = contactRepository;
-        _fileService = new FileService(@"c:\projects\Business", "contacts.json");
+        _fileService = new FileService(@"c:\projects\Assignment_CSharp\Business\Data", "contacts.json");
         _contacts = LoadContacts();
     }
 

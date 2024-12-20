@@ -43,6 +43,6 @@ public class ContactService_Tests
 
 
 
-        _contactRepositoryMock.Setup(cr => cr.GetContactsFile()).Returns(expectedContacts);
+        _contactRepositoryMock.Setup(cr => cr.GetContactsFromFile()).Returns(expectedContacts);
     }
 }

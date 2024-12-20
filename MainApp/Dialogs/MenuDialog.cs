@@ -2,6 +2,8 @@
 using Business.Interfaces;
 using Business.Repositories;
 using Business.Services;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Diagnostics;
 
 namespace MainApp.Dialogs;
 
@@ -62,8 +64,8 @@ public class MenuDialog(IContactService contactService)
         Console.Write("Address: ");
         contact.Address = Console.ReadLine();
 
-        Console.Write("Postal Code: ");
-        contact.PostalCode = Console.ReadLine();
+        Console.Write("ZIP code: ");
+        contact.ZipCode = Console.ReadLine();
 
         Console.Write("City: ");
         contact.City = Console.ReadLine();
@@ -97,15 +99,16 @@ public class MenuDialog(IContactService contactService)
             Console.WriteLine($" Name: {contact.FirstName} {contact.LastName}");
             Console.WriteLine($" Email: {contact.Email}");
             Console.WriteLine($" Phone number: {contact.PhoneNumber}");
-            Console.WriteLine($" Address: {contact.Address} - {contact.PostalCode} - {contact.City}");
+            Console.WriteLine($" Address: {contact.Address} - {contact.ZipCode} - {contact.City}");
             Console.WriteLine("-------------------------------------------");
         }
 
         if (contacts.Count() == 0)
         {
-            Console.WriteLine("No contacts found. Press any key to continue...");
+            Console.WriteLine("No contacts found.");
         }
 
+        Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
     }
 

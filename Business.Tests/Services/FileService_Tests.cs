@@ -11,14 +11,14 @@ public class FileService_Tests
 
     public FileService_Tests()
     {
-        _fileService = new FileService("Tests", "tests_contacts.json");
+        _fileService = new FileService("TestData", "tests_contacts.json");
     }
 
     [Fact]
     public void SaveContentToFile_ShouldReturnTrueAndCreateFileWithContent()
     {
         // Act
-        var result = _fileService.SaveContentToFile("content");
+        var result = _fileService.SaveContentToFile("test_content");
 
         // Assert
         Assert.True(result);

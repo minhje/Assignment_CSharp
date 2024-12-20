@@ -11,6 +11,6 @@ public class ContactFactory_Tests
         var result = ContactFactory.Create();
 
         Assert.NotNull(result);
-        Assert.IsType
+        Assert.IsType;
     }
 }
