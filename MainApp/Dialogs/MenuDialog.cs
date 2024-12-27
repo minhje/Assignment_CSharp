@@ -1,9 +1,5 @@
 ﻿using Business.Factories;
 using Business.Interfaces;
-using Business.Repositories;
-using Business.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Diagnostics;
 
 namespace MainApp.Dialogs;
 
@@ -50,25 +46,25 @@ public class MenuDialog(IContactService contactService)
         Console.Clear();
         Console.WriteLine("-------- ADD CONTACT --------");
         Console.Write("First Name: ");
-        contact.FirstName = Console.ReadLine();
+        contact.FirstName = Console.ReadLine()!;
 
         Console.Write("Last Name: ");
-        contact.LastName = Console.ReadLine();
+        contact.LastName = Console.ReadLine()!;
 
         Console.Write("Email: ");
-        contact.Email = Console.ReadLine();
+        contact.Email = Console.ReadLine()!;
 
         Console.Write("Phone number: ");
-        contact.PhoneNumber = Console.ReadLine();
+        contact.PhoneNumber = Console.ReadLine()!;
 
         Console.Write("Address: ");
-        contact.Address = Console.ReadLine();
+        contact.Address = Console.ReadLine()!;
 
         Console.Write("ZIP code: ");
-        contact.ZipCode = Console.ReadLine();
+        contact.ZipCode = Console.ReadLine()!;
 
         Console.Write("City: ");
-        contact.City = Console.ReadLine();
+        contact.City = Console.ReadLine()!;
 
         var result = _contactService.CreateContact(contact);
 
@@ -116,7 +112,7 @@ public class MenuDialog(IContactService contactService)
     {
         Console.Clear();
         Console.WriteLine("Are you sure you want to exit the application (y/n)? ");
-        var response = Console.ReadLine();
+        var response = Console.ReadLine()!;
 
         if (response.ToLower() == "y")
         {

@@ -5,9 +5,14 @@ using System.Text.Json;
 
 namespace Business.Repositories;
 
-public class ContactRepository(IFileService fileService) : IContactRepository
+public class ContactRepository: IContactRepository
 {
-    private readonly IFileService _fileService = fileService;
+    private readonly IFileService _fileService;
+
+    public ContactRepository(IFileService fileService)
+    {
+        _fileService = fileService;
+    }
 
     public bool SaveContactListToFile(List<Contact> list)
     {
@@ -26,26 +31,22 @@ public class ContactRepository(IFileService fileService) : IContactRepository
 
     public List<Contact> GetContactsFromFile()
     {
-        var list = new List<Contact>();
-
         try
         {
             var json = _fileService.GetContentFromFile();
 
-            if (!string.IsNullOrEmpty(json))       
-                list = JsonSerializer.Deserialize<List<Contact>>(json);
+            if (string.IsNullOrEmpty(json))
+            {
+                return new List<Contact>();
+            }
+            return JsonSerializer.Deserialize<List<Contact>>(json) ?? new List<Contact>();
         }
+        
         catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
-            return [];
+            return new List<Contact>();
         }
-
-        if (list == null)
-            return [];
-
-        else
-        return list;
     }
 
     public List<Contact> GetAllContacts()

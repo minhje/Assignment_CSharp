@@ -6,5 +6,7 @@ namespace Business.Interfaces
     {
         bool CreateContact(Contact contact);
         IEnumerable<Contact> GetAllContacts();
+        //List<Contact> LoadContacts();
+        bool SaveContacts(List<Contact> contacts);
     }
 }

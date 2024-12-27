@@ -9,14 +9,10 @@ namespace Business.Services;
 public class ContactService : IContactService
 {
     private readonly IContactRepository _contactRepository;
-    private readonly List<Contact> _contacts;
-    private readonly FileService _fileService;
 
     public ContactService(IContactRepository contactRepository)
     {
         _contactRepository = contactRepository;
-        _fileService = new FileService(@"c:\projects\Assignment_CSharp\Business\Data", "contacts.json");
-        _contacts = LoadContacts();
     }
 
     public bool CreateContact(Contact contact)
@@ -24,9 +20,10 @@ public class ContactService : IContactService
         try
         {
             contact.Id = IdGenerator.GenerateUniqueId();
-            _contacts.Add(contact);
+            var contacts = _contactRepository.GetAllContacts();
+            contacts.Add(contact);
 
-            return SaveContacts();
+            return _contactRepository.SaveContactListToFile(contacts);
         }
         catch (Exception ex)
         {
@@ -34,25 +31,15 @@ public class ContactService : IContactService
             return false;
         }
     }
-    private List<Contact> LoadContacts()
-    {
-        var content = _fileService.GetContentFromFile();
-        if (string.IsNullOrEmpty(content))
-        {
-            return new List<Contact>();
-        }
 
-        return JsonSerializer.Deserialize<List<Contact>>(content)!;
-    }
-
-    private bool SaveContacts()
+    public bool SaveContacts(List<Contact> contacts)
     {
-        var content = JsonSerializer.Serialize(_contacts);
-        return _fileService.SaveContentToFile(content);
+        return _contactRepository.SaveContactListToFile(contacts);
     }
 
     public IEnumerable<Contact> GetAllContacts()
     {
-        return _contacts;
+        return _contactRepository.GetAllContacts();
     }
+
 }
