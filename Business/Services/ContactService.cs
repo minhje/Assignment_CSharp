@@ -32,6 +32,48 @@ public class ContactService : IContactService
         }
     }
 
+    public Task UpdateContact(Contact contact)
+    {
+        try
+        {
+            var contacts = _contactRepository.GetAllContacts();
+            var existingContact = contacts.FirstOrDefault(c => c.Id == contact.Id);
+
+            if (existingContact != null)
+            {
+                existingContact.FirstName = contact.FirstName;
+                existingContact.LastName = contact.LastName;
+                existingContact.Email = contact.Email;
+                existingContact.PhoneNumber = contact.PhoneNumber;
+                existingContact.Address = contact.Address;
+                existingContact.ZipCode = contact.ZipCode;
+                existingContact.City = contact.City;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public bool DeleteContact(Contact contact)
+    {
+        try
+        {
+            var contacts = _contactRepository.GetAllContacts();
+            contacts.Remove(contact);
+            return _contactRepository.SaveContactListToFile(contacts);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return false;
+        }
+    }
+
+
     public bool SaveContacts(List<Contact> contacts)
     {
         return _contactRepository.SaveContactListToFile(contacts);

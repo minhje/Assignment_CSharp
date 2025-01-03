@@ -4,13 +4,15 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MobileApp"
-    Shell.FlyoutBehavior="Flyout"
+    
+    xmlns:pages="clr-namespace:MobileApp.Pages"
+    
+    Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="False"
     Title="Contacts">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <ShellContent Title="Contact List" Route="ContactListPage" ContentTemplate="{DataTemplate pages:ContactListPage}" />
+    <ShellContent Title="Add Contact" Route="ContactAddPage" ContentTemplate="{DataTemplate pages:ContactAddPage}" />
+    <ShellContent Title="Edit Contact" Route="ContactEditPage" ContentTemplate="{DataTemplate pages:ContactEditPage}" />
 
 </Shell>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             
+             
+             xmlns:viewmodels="clr-namespace:MobileApp.ViewModels"
+             xmlns:models="clr-namespace:Business.Models;assembly=Business"
+             x:DataType="{x:Type viewmodels:ContactListViewModel}"
+             
+             x:Class="MobileApp.Pages.ContactListPage"
+             Title="Contact List">
+
+    <Grid RowDefinitions="auto, *" Margin="20">
+        <Button Grid.Row="0" Text="Add new contact" Command="{Binding NavigateToAddContactCommand}" Margin="0,0,0,20"/>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Contacts}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Contact">
+                    <Grid ColumnDefinitions="*, auto">
+                        <Label Grid.Column="0" Text="{Binding FirstName}" VerticalOptions="Center" VerticalTextAlignment="Center"/>
+
+                        <HorizontalStackLayout Grid.Column="1">
+                            <Button Text="EDIT" CommandParameter="{Binding .}" Command="{Binding Path=NavigateToEditContactCommand, Source={RelativeSource AncestorType={x:Type viewmodels:ContactListViewModel}}}" Margin="5,0,0,0" />
+                            <Button Text="DELETE" CommandParameter="{Binding .}" Command="{Binding Path=DeleteContactCommand, Source={RelativeSource AncestorType={x:Type viewmodels:ContactListViewModel}}}" Margin="5,0,0,0"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>
